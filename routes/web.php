@@ -38,6 +38,9 @@ Route::post('/create','PostsController@create')->middleware('auth');
 Route::get('/profile','UsersController@profile')->middleware('auth');
 
 Route::get('/search','UsersController@index');
+Route::get('/search','UsersController@search')->middleware('auth');
+Route::get('/searchList','UsersController@searchList')->middleware('auth');
+Route::post('/searchList','UsersController@searchList')->middleware('auth');
 
 Route::get('/follow-list','PostsController@index');
 Route::get('/follower-list','PostsController@index');

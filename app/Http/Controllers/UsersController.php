@@ -98,4 +98,9 @@ class UsersController extends Controller
         return redirect('/profile');
         }
     }
+    public function searchList(Request $request){
+        $search = $_GET["search"];
+        $users = DB::table('users')->where('username','like',"%$search%")->get();
+        return view('users.search',['users'=>$users, 'search'=>$search]);
+    }
 }
