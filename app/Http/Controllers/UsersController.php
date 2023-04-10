@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 
+use DB; // use App\Http\Controllers\DB;　ではエラーになる
 
 class UsersController extends Controller
 {
@@ -102,5 +103,19 @@ class UsersController extends Controller
         $search = $_GET["search"];
         $users = DB::table('users')->where('username','like',"%$search%")->get();
         return view('users.search',['users'=>$users, 'search'=>$search]);
+    }
+    public function usersProfile($id){
+        $profile = DB::table('users')
+            ->select('*')
+            ->where('id',$id)
+            ->get();
+
+        $posts = DB::table('posts')
+            ->select('posts.posts','posts.created_at','users.username','users.images')
+            ->join('users','posts.user_id','=','users.id')
+            ->where('posts.user_id',$id)
+            ->get();
+
+        return view('users.usersProfile',['profile'=>$profile,'posts'=>$posts]);
     }
 }
