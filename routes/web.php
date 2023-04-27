@@ -45,5 +45,7 @@ Route::post('/searchList','UsersController@searchList')->middleware('auth');
 Route::get('/follow-list','PostsController@index');
 Route::get('/follower-list','PostsController@index');
 Route::get('/user{id}','UsersController@usersProfile')->middleware('auth');
+Route::get('/follow{id}','UsersController@userProfileFollow')->middleware('auth');
+Route::get('/unfollow{id}','UsersController@userProfileUnfollow')->middleware('auth');
 
 Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth');

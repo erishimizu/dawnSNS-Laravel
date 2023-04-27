@@ -118,4 +118,32 @@ class UsersController extends Controller
 
         return view('users.usersProfile',['profile'=>$profile,'posts'=>$posts]);
     }
+    public function userProfileFollow($id) {
+        $auth = Auth::id();
+        DB::table('follows')
+            ->insert([
+                'follower' => $auth,
+                'follow' => $id
+            ]);
+        $profile = DB::table('users')
+            ->select('*')
+            ->where('id',$id)
+            ->get();
+
+        $posts = DB::table('posts')
+            ->select('posts.posts','posts.created_at','users.username','users.images')
+            ->join('users','posts.user_id','=','users.id')
+            ->where('posts.user_id',$id)
+            ->get();
+
+        return redirect('/user'.$id);
+    }
+    public function userProfileUnfollow($id) {
+        $auth = Auth::id();
+        DB::table('follows')
+            ->where([['follow',$id],['follower',$auth]])
+            ->delete();
+
+        return redirect('/user'.$id);
+    }
 }
