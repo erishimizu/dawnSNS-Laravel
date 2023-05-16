@@ -23,7 +23,7 @@
         {{ Form::button('<img src="/images/edit.png">',['type' => 'submit']) }}
         {{ Form::close() }}
     </div>
-    <div><a href="/postDelete"><img src="/images/trash.png"></a></div>
+    <div><a href="/postDelete/{{ $lists->post_id }}"><img src="/images/trash.png"></a></div>
   @else
     <div><a href="/user{{ $lists->id }}"><img src="/storage/{{ $lists->images }}"></a></div>
     <div>{{ $lists->username }}</div>
